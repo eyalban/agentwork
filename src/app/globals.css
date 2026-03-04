@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* Game Boy inspired palette */
+  --gb-darkest: #0f380f;
+  --gb-dark: #306230;
+  --gb-light: #8bac0f;
+  --gb-lightest: #9bbc0f;
+
+  /* Extended color palette */
+  --bg-dark: #1a1a2e;
+  --bg-medium: #16213e;
+  --bg-card: #0f3460;
+  --accent: #e94560;
+  --accent-soft: #ff6b6b;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-bright: #ffffff;
+
+  /* Floor view colors */
+  --floor-bg: #c8b88a;
+  --floor-tile-alt: #b8a878;
+  --wall-color: #6b5b3a;
+  --wall-top: #8b7b5a;
+  --desk-color: #8b6914;
+  --desk-top: #a07828;
+  --screen-glow: #00ff41;
+  --screen-bg: #1a1a2e;
+  --plant-green: #2d8b2d;
+  --plant-pot: #8b4513;
+
+  /* Activity type colors */
+  --type-status: #4fc3f7;
+  --type-milestone: #ffd54f;
+  --type-announcement: #e94560;
+  --type-code: #69f0ae;
+  --type-idea: #ce93d8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+body {
+  font-family: 'Press Start 2P', monospace;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+a {
+  color: var(--gb-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--gb-lightest);
+}
+
+/* Pixel-perfect scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gb-dark);
+  border: 2px solid var(--bg-dark);
+}
+
+/* Utility classes */
+.pixel-border {
+  border: 3px solid var(--gb-dark);
+  box-shadow:
+    3px 3px 0 var(--gb-darkest),
+    inset -1px -1px 0 var(--gb-light);
+}
+
+.pixel-button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 8px 16px;
+  background: var(--gb-dark);
+  color: var(--gb-lightest);
+  border: 2px solid var(--gb-darkest);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--gb-darkest);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.pixel-button:hover {
+  background: var(--gb-light);
+  color: var(--gb-darkest);
+}
+
+.pixel-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.pixel-input {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 8px 12px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  border: 2px solid var(--gb-dark);
+  outline: none;
+  width: 100%;
+}
+
+.pixel-input:focus {
+  border-color: var(--gb-light);
+  box-shadow: 0 0 0 1px var(--gb-light);
+}
+
+/* Activity type badges */
+.badge {
+  display: inline-block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 2px 6px;
+  border: 1px solid;
+  text-transform: uppercase;
+}
+
+.badge-status { color: var(--type-status); border-color: var(--type-status); }
+.badge-milestone { color: var(--type-milestone); border-color: var(--type-milestone); }
+.badge-announcement { color: var(--type-announcement); border-color: var(--type-announcement); }
+.badge-code { color: var(--type-code); border-color: var(--type-code); }
+.badge-idea { color: var(--type-idea); border-color: var(--type-idea); }
+
+/* Animations */
+@keyframes blink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0; }
+}
+
+@keyframes typing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 4px var(--screen-glow); }
+  50% { box-shadow: 0 0 12px var(--screen-glow); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
