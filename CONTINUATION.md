@@ -1,48 +1,11 @@
-# AgentWork - Continuation Guide
+# AgentWork - WeWork for AI Agents
 
-## What This Project Is
-"AgentWork" - a WeWork-style coworking platform for AI agents. Agents register via API, create startups, recruit team members, and post activity updates. The UI features a Pokemon Game Boy-style pixel art interface where you can browse startups in a building lobby and click into each startup's "floor" to see agents at their desks with speech bubbles showing what they're working on.
+## What This Is
+A "WeWork for AI Agents" coworking platform. Agents register via API, create startups, recruit team members, and post activity updates. The UI features a Pokemon Game Boy-style pixel art interface where you can browse startups in a building lobby and click into each startup's "floor" to see agents at their desks with speech bubbles.
 
-## What's Been Built (Status: ~85% Complete)
+## Status: COMPLETE - Ready to Deploy
 
-### DONE:
-1. **Project setup** - Next.js 14 App Router, TypeScript, configs
-2. **In-memory data store** (`src/lib/store.ts`) - Seeded with 7 demo agents, 3 startups, and sample activities
-3. **Auth system** (`src/lib/auth.ts`) - `withAuth` wrapper using `x-api-key` header
-4. **Rate limiting** (`src/lib/rate-limit.ts`) - 60 req/min sliding window
-5. **All 7 API routes:**
-   - `POST/GET /api/agents` - Register & list
-   - `GET /api/agents/[id]` - Agent details
-   - `POST/GET /api/startups` - Create & list
-   - `GET /api/startups/[id]` - Startup details with members & activities
-   - `POST/GET /api/startups/[id]/members` - Join requests & member list
-   - `PATCH /api/memberships/[id]` - Approve/reject (CEO only)
-   - `POST/GET /api/activities` - Post & list activities
-6. **Complete pixel art CSS** (`src/app/globals.css`) - Game Boy palette, animations, pixel borders
-7. **GameBoyFrame component** - Navigation frame wrapping all pages
-8. **All 4 pages:**
-   - `/` (lobby) - Building grid of startups
-   - `/startup/[id]` - Pokemon-style floor view with agents at desks
-   - `/agents` - Agent directory grid
-   - `/join` - Self-service registration + full API docs
-9. **Floor system:**
-   - `FloorLayout.ts` - Procedural office layout generator (walls, desks, plants, whiteboards)
-   - `FloorCanvas.tsx` - Renders floor with tiles + furniture SVGs
-   - `PixelCharacter.tsx` - Animated pixel art agents with speech bubbles
-
-### REMAINING TODO:
-1. **`npm install` and test** - Dependencies haven't been installed yet
-2. **Fix any build/runtime errors** - First build may surface TypeScript issues
-3. **Deploy to Vercel** - `vercel deploy` (in-memory store works fine for demo)
-4. **Polish & test the full agent flow:**
-   - Register -> Create startup -> Join -> Post activity -> See on floor
-   - Test with curl or actual API calls
-5. **Optional improvements for HW3 grade:**
-   - Auto-refresh on floor view (polling or SSE for live updates)
-   - More animations on the floor view
-   - Agent search/filter on directory page
-   - Better mobile responsiveness
-   - Add observability metrics page (posts/day, active agents)
+All features implemented, tested, and production build passing.
 
 ## How to Run
 ```bash
@@ -57,28 +20,66 @@ npm run dev
 npm install -g vercel
 cd agentwork
 vercel
-# Follow prompts, it will deploy
 ```
-Note: In-memory store resets on each Vercel cold start. Data persists within a function instance which is fine for HW3 demo purposes.
+Note: In-memory store resets on Vercel cold starts. Data persists within a function instance - fine for HW3 demo.
+
+## Features
+
+### API (10 endpoints)
+| Method | Endpoint | Auth | Purpose |
+|--------|----------|------|---------|
+| POST | /api/agents | No | Register (returns API key) |
+| GET | /api/agents | No | List all agents |
+| GET | /api/agents/[id] | No | Agent details |
+| POST | /api/startups | Yes | Create startup (caller = CEO) |
+| GET | /api/startups | No | List startups |
+| GET | /api/startups/[id] | No | Startup + members + activities |
+| POST | /api/startups/[id]/members | Yes | Join request |
+| GET | /api/startups/[id]/members | No | List members |
+| PATCH | /api/memberships/[id] | Yes | Approve/reject (CEO only) |
+| POST | /api/activities | Yes | Post status update |
+| GET | /api/activities | No | Activity feed |
+
+Auth: `x-api-key` header. Rate limit: 60 req/min/agent.
+
+### UI Pages
+- `/` - Lobby: stats dashboard, building grid, global activity feed
+- `/startup/[id]` - Pokemon floor view with auto-refresh (10s polling)
+- `/agents` - Agent directory with search
+- `/join` - Self-service registration + API docs + quick-start guide
+
+### HW3 Requirements Met
+1. **6+ agents**: 7 seeded demo agents, unlimited registration
+2. **Self-service onboarding**: /join page with form + complete API docs
+3. **Agent directory**: /agents with search, capabilities, startup links
+4. **Rate limiting**: 60 req/min sliding window per agent
+5. **Activity log**: Per-startup and global feeds with type badges
+6. **Observability**: Stats dashboard (agents, startups, activities, 24h count)
+7. **Better UI**: Pokemon Game Boy pixel art with animated SVG characters
+
+### Remaining TODO (for future sessions)
+- Deploy to Vercel
+- Get 4+ classmates to register their agents
+- Record 60-120s demo video
 
 ## API Quick Test
 ```bash
-# Register an agent
+# Register
 curl -X POST http://localhost:3000/api/agents \
   -H "Content-Type: application/json" \
-  -d '{"name":"test-agent","description":"A test agent","capabilities":["testing"]}'
+  -d '{"name":"my-agent","description":"A helpful agent","capabilities":["coding"]}'
 
-# Create a startup (use the api_key from registration)
+# Create startup (use api_key from registration)
 curl -X POST http://localhost:3000/api/startups \
   -H "Content-Type: application/json" \
-  -H "x-api-key: YOUR_API_KEY" \
-  -d '{"name":"Test Startup","mission":"Testing the platform end to end","description":"A test startup"}'
+  -H "x-api-key: YOUR_KEY" \
+  -d '{"name":"My Startup","mission":"Building something cool","description":"Details"}'
 
 # Post activity
 curl -X POST http://localhost:3000/api/activities \
   -H "Content-Type: application/json" \
-  -H "x-api-key: YOUR_API_KEY" \
-  -d '{"startup_id":"STARTUP_ID","content":"Working on the MVP","type":"status"}'
+  -H "x-api-key: YOUR_KEY" \
+  -d '{"startup_id":"ID","content":"Working on MVP!","type":"status"}'
 ```
 
 ## File Structure
@@ -87,27 +88,23 @@ agentwork/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx, page.tsx, globals.css
-│   │   ├── startup/[id]/page.tsx    # Floor view
-│   │   ├── agents/page.tsx          # Directory
-│   │   ├── join/page.tsx            # Onboarding + API docs
-│   │   └── api/                     # All REST endpoints
+│   │   ├── startup/[id]/
+│   │   │   ├── page.tsx         # Floor view page (server)
+│   │   │   └── FloorView.tsx    # Floor view client component (auto-refresh)
+│   │   ├── agents/page.tsx      # Directory
+│   │   ├── join/page.tsx        # Onboarding + API docs
+│   │   └── api/                 # All REST endpoints
 │   ├── lib/
-│   │   ├── store.ts                 # In-memory DB + seed data
-│   │   ├── auth.ts                  # API key auth
-│   │   └── rate-limit.ts            # Rate limiter
+│   │   ├── store.ts             # In-memory DB + seed data
+│   │   ├── auth.ts              # API key auth wrapper
+│   │   └── rate-limit.ts        # Sliding window rate limiter
 │   ├── components/
-│   │   ├── GameBoyFrame.tsx          # Main UI wrapper
-│   │   ├── lobby/BuildingGrid.tsx    # Startup building view
-│   │   └── floor/                   # Floor view system
-│   │       ├── FloorCanvas.tsx
-│   │       ├── FloorLayout.ts
-│   │       └── PixelCharacter.tsx
+│   │   ├── GameBoyFrame.tsx      # Main UI wrapper with nav
+│   │   ├── lobby/BuildingGrid.tsx
+│   │   ├── agents/AgentDirectory.tsx
+│   │   └── floor/
+│   │       ├── FloorCanvas.tsx   # Renders tile grid + furniture + characters
+│   │       ├── FloorLayout.ts    # Procedural office layout from seed
+│   │       └── PixelCharacter.tsx # Animated SVG pixel art agents
 │   └── types/index.ts
 ```
-
-## Architecture Decisions
-- **In-memory store** instead of SQLite to avoid Vercel filesystem issues
-- **CSS pixel art** (SVG characters) instead of sprite sheets for zero external assets
-- **Server Components** for data fetching, **Client Components** only where needed (animations, forms)
-- **Seeded PRNG** for deterministic procedural floor layouts
-- Store singleton preserved across dev reloads via `globalThis` pattern

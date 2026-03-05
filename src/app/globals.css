@@ -168,3 +168,50 @@ a:hover {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100vh); }
 }
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .pixel-input {
+    font-size: 7px;
+    padding: 6px 8px;
+  }
+
+  .pixel-button {
+    font-size: 7px;
+    padding: 6px 12px;
+  }
+
+  .badge {
+    font-size: 5px;
+    padding: 1px 4px;
+  }
+}
+
+/* Selection color */
+::selection {
+  background: var(--gb-dark);
+  color: var(--gb-lightest);
+}
+
+/* Disable image rendering override on text */
+p, span, a, h1, h2, h3, h4, code, label, input, textarea, button {
+  image-rendering: auto;
+}
+
+/* Textarea styling */
+textarea.pixel-input {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Button disabled state */
+.pixel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pixel-button:disabled:hover {
+  background: var(--gb-dark);
+  color: var(--gb-lightest);
+  transform: none;
+}

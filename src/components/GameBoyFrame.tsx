@@ -25,42 +25,55 @@ export default function GameBoyFrame({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '16px',
+      padding: '8px',
     }}>
       {/* Header */}
       <header style={{
         width: '100%',
         maxWidth: '960px',
-        marginBottom: '8px',
+        marginBottom: '0',
       }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '12px 16px',
+          padding: '10px 12px',
           background: 'var(--gb-darkest)',
           border: '3px solid var(--gb-dark)',
           borderBottom: 'none',
+          flexWrap: 'wrap',
+          gap: '8px',
         }}>
-          <Link href="/" style={{ fontSize: '12px', color: 'var(--gb-light)' }}>
+          <Link href="/" style={{
+            fontSize: '11px',
+            color: 'var(--gb-light)',
+            letterSpacing: '1px',
+          }}>
             AGENTWORK
           </Link>
-          <nav style={{ display: 'flex', gap: '12px' }}>
-            {navItems.map(item => (
-              <Link
-                key={item.href}
-                href={item.href}
-                style={{
-                  fontSize: '7px',
-                  padding: '4px 8px',
-                  color: pathname === item.href ? 'var(--gb-lightest)' : 'var(--gb-dark)',
-                  background: pathname === item.href ? 'var(--gb-dark)' : 'transparent',
-                  border: '1px solid var(--gb-dark)',
-                }}
-              >
-                {item.icon} {item.label}
-              </Link>
-            ))}
+          <nav style={{ display: 'flex', gap: '6px' }}>
+            {navItems.map(item => {
+              const isActive = item.href === '/'
+                ? pathname === '/'
+                : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    fontSize: '7px',
+                    padding: '4px 8px',
+                    color: isActive ? 'var(--gb-lightest)' : 'var(--gb-dark)',
+                    background: isActive ? 'var(--gb-dark)' : 'transparent',
+                    border: `1px solid ${isActive ? 'var(--gb-light)' : 'var(--gb-dark)'}`,
+                    transition: 'all 0.15s',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {item.icon} {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </header>
@@ -71,6 +84,7 @@ export default function GameBoyFrame({
         maxWidth: '960px',
         background: 'var(--bg-medium)',
         border: '3px solid var(--gb-dark)',
+        borderTop: 'none',
         boxShadow: '4px 4px 0 var(--gb-darkest), inset 0 0 40px rgba(0,0,0,0.3)',
         position: 'relative',
         overflow: 'hidden',
@@ -81,7 +95,7 @@ export default function GameBoyFrame({
           padding: '8px 12px',
           background: 'var(--gb-darkest)',
           borderBottom: '2px solid var(--gb-dark)',
-          fontSize: '10px',
+          fontSize: '9px',
           color: 'var(--gb-light)',
           textAlign: 'center',
           letterSpacing: '2px',
@@ -90,7 +104,7 @@ export default function GameBoyFrame({
         </div>
 
         {/* Content */}
-        <div style={{ padding: '16px', minHeight: '400px' }}>
+        <div style={{ padding: '12px', minHeight: '400px' }}>
           {children}
         </div>
 
@@ -110,13 +124,14 @@ export default function GameBoyFrame({
       <footer style={{
         width: '100%',
         maxWidth: '960px',
-        padding: '8px 16px',
+        padding: '6px 12px',
         background: 'var(--gb-darkest)',
         border: '3px solid var(--gb-dark)',
         borderTop: 'none',
-        fontSize: '6px',
+        fontSize: '5px',
         color: 'var(--gb-dark)',
         textAlign: 'center',
+        letterSpacing: '1px',
       }}>
         MEDIA LAB HW3 - AGENTWORK v0.1 - POWERED BY AI AGENTS
       </footer>

@@ -18,7 +18,7 @@ function hashString(str: string): number {
 }
 
 export type TileType = 'floor' | 'floor-alt' | 'wall' | 'wall-top' | 'door';
-export type FurnitureType = 'desk' | 'computer' | 'plant' | 'whiteboard' | 'coffee' | 'chair';
+export type FurnitureType = 'desk' | 'computer' | 'plant' | 'whiteboard' | 'coffee' | 'chair' | 'rug';
 
 export interface Tile {
   x: number;
@@ -57,9 +57,13 @@ export function generateFloorLayout(
 ): FloorLayoutResult {
   const rng = mulberry32(hashString(seed));
 
-  // Room size scales with team
-  const cols = Math.min(18, 10 + Math.floor(memberCount / 2) * 2);
-  const rows = Math.min(14, 8 + Math.floor(memberCount / 3) * 2);
+  // Room must be large enough for desks with good spacing
+  // Each agent needs ~4x4 area (desk + computer + agent + bubble space)
+  const agentsPerRow = Math.min(3, memberCount);
+  const agentRows = Math.ceil(memberCount / agentsPerRow);
+
+  const cols = Math.max(14, 4 + agentsPerRow * 5);
+  const rows = Math.max(12, 5 + agentRows * 5);
 
   const tiles: Tile[] = [];
   const furniture: FurnitureItem[] = [];
@@ -70,24 +74,19 @@ export function generateFloorLayout(
     for (let x = 0; x < cols; x++) {
       let type: TileType = 'floor';
 
-      // Walls
       if (y === 0) {
         type = 'wall-top';
-      } else if (y === 1 && (x === 0 || x === cols - 1)) {
+      } else if (y === 1) {
         type = 'wall';
       } else if (x === 0 || x === cols - 1) {
         type = 'wall';
       } else if (y === rows - 1) {
-        // Bottom wall with door in center
         if (x === Math.floor(cols / 2) || x === Math.floor(cols / 2) + 1) {
           type = 'door';
         } else {
           type = 'wall';
         }
-      } else if (y === 1) {
-        type = 'wall';
       } else {
-        // Checkerboard floor pattern
         type = (x + y) % 2 === 0 ? 'floor' : 'floor-alt';
       }
 
@@ -95,24 +94,30 @@ export function generateFloorLayout(
     }
   }
 
-  // Place desks in a grid pattern (each desk is 1 tile, with a computer on it)
-  const deskStartX = 3;
-  const deskStartY = 3;
-  const deskSpacingX = 3;
-  const deskSpacingY = 3;
+  // Place desks with generous spacing
+  const deskSpacingX = 5;
+  const deskSpacingY = 5;
+  // Center the desk grid in the room
+  const gridWidth = (agentsPerRow - 1) * deskSpacingX;
+  const gridHeight = (agentRows - 1) * deskSpacingY;
+  const deskStartX = Math.floor((cols - gridWidth) / 2);
+  const deskStartY = Math.max(4, Math.floor((rows - gridHeight) / 2));
+
   let deskIndex = 0;
 
-  for (let row = 0; row < Math.ceil(memberCount / 3); row++) {
-    for (let col = 0; col < Math.min(3, memberCount - row * 3); col++) {
-      const dx = deskStartX + col * deskSpacingX;
+  for (let row = 0; row < agentRows; row++) {
+    const agentsThisRow = Math.min(agentsPerRow, memberCount - row * agentsPerRow);
+    // Center this row if it has fewer agents
+    const rowOffset = Math.floor((agentsPerRow - agentsThisRow) * deskSpacingX / 2);
+
+    for (let col = 0; col < agentsThisRow; col++) {
+      const dx = deskStartX + col * deskSpacingX + rowOffset;
       const dy = deskStartY + row * deskSpacingY;
 
-      if (dx < cols - 2 && dy < rows - 2) {
-        const deskId = `desk_${deskIndex}`;
-        furniture.push({ x: dx, y: dy, type: 'desk', id: deskId });
+      if (dx >= 1 && dx < cols - 1 && dy >= 2 && dy < rows - 2) {
+        furniture.push({ x: dx, y: dy, type: 'desk', id: `desk_${deskIndex}` });
         furniture.push({ x: dx, y: dy - 1, type: 'computer', id: `comp_${deskIndex}` });
 
-        // Place agent at desk (sitting below it)
         if (deskIndex < memberIds.length) {
           agentPositions.push({
             agentId: memberIds[deskIndex],
@@ -129,8 +134,7 @@ export function generateFloorLayout(
     }
   }
 
-  // Decorations
-  // Plants in corners
+  // Decorations - plants in corners (away from desks)
   const plantPositions = [
     { x: 1, y: 2 },
     { x: cols - 2, y: 2 },
@@ -139,7 +143,7 @@ export function generateFloorLayout(
   ];
 
   for (let i = 0; i < plantPositions.length; i++) {
-    if (rng() > 0.3) {
+    if (rng() > 0.2) {
       furniture.push({
         x: plantPositions[i].x,
         y: plantPositions[i].y,
@@ -149,8 +153,8 @@ export function generateFloorLayout(
     }
   }
 
-  // Whiteboard on top wall
-  if (cols > 8) {
+  // Whiteboard on top wall area
+  if (cols > 10) {
     furniture.push({
       x: Math.floor(cols / 2),
       y: 2,
@@ -160,13 +164,20 @@ export function generateFloorLayout(
   }
 
   // Coffee machine
-  if (rng() > 0.3) {
+  if (rng() > 0.2) {
     furniture.push({
       x: cols - 3,
       y: 2,
       type: 'coffee',
       id: 'coffee_0',
     });
+  }
+
+  // Rug in center for visual variety
+  if (memberCount >= 3 && rng() > 0.4) {
+    const rugX = Math.floor(cols / 2);
+    const rugY = Math.floor(rows / 2) + 1;
+    furniture.push({ x: rugX, y: rugY, type: 'rug', id: 'rug_0' });
   }
 
   return { tiles, furniture, agentPositions, cols, rows };

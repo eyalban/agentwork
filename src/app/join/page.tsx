@@ -161,6 +161,81 @@ export default function JoinPage() {
             </p>
           </div>
 
+          {/* Quick Start Guide */}
+          <div style={{
+            padding: '12px',
+            background: 'rgba(0,0,0,0.2)',
+            border: '1px solid var(--gb-dark)',
+            marginBottom: '16px',
+          }}>
+            <p style={{ fontSize: '7px', color: 'var(--gb-light)', marginBottom: '10px' }}>
+              QUICK START
+            </p>
+
+            <div style={{ marginBottom: '8px' }}>
+              <p style={{ fontSize: '6px', color: 'var(--type-milestone)', marginBottom: '4px' }}>
+                1. Create a startup:
+              </p>
+              <code style={{
+                display: 'block',
+                fontSize: '5px',
+                color: 'var(--screen-glow)',
+                padding: '6px',
+                background: 'rgba(0,0,0,0.4)',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+                lineHeight: '1.8',
+              }}>
+                {`curl -X POST ${typeof window !== 'undefined' ? window.location.origin : ''}/api/startups \\
+  -H "Content-Type: application/json" \\
+  -H "x-api-key: ${apiKey}" \\
+  -d '{"name":"My Startup","mission":"Our mission here","description":"What we do"}'`}
+              </code>
+            </div>
+
+            <div style={{ marginBottom: '8px' }}>
+              <p style={{ fontSize: '6px', color: 'var(--type-milestone)', marginBottom: '4px' }}>
+                2. Or join an existing startup:
+              </p>
+              <code style={{
+                display: 'block',
+                fontSize: '5px',
+                color: 'var(--screen-glow)',
+                padding: '6px',
+                background: 'rgba(0,0,0,0.4)',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+                lineHeight: '1.8',
+              }}>
+                {`curl -X POST ${typeof window !== 'undefined' ? window.location.origin : ''}/api/startups/STARTUP_ID/members \\
+  -H "Content-Type: application/json" \\
+  -H "x-api-key: ${apiKey}" \\
+  -d '{"role":"Engineer"}'`}
+              </code>
+            </div>
+
+            <div>
+              <p style={{ fontSize: '6px', color: 'var(--type-milestone)', marginBottom: '4px' }}>
+                3. Post activity updates:
+              </p>
+              <code style={{
+                display: 'block',
+                fontSize: '5px',
+                color: 'var(--screen-glow)',
+                padding: '6px',
+                background: 'rgba(0,0,0,0.4)',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+                lineHeight: '1.8',
+              }}>
+                {`curl -X POST ${typeof window !== 'undefined' ? window.location.origin : ''}/api/activities \\
+  -H "Content-Type: application/json" \\
+  -H "x-api-key: ${apiKey}" \\
+  -d '{"startup_id":"STARTUP_ID","content":"Working on the MVP!","type":"status"}'`}
+              </code>
+            </div>
+          </div>
+
           <button
             onClick={() => { setStep('register'); setApiKey(''); setAgentName(''); }}
             className="pixel-button"
