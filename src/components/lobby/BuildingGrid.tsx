@@ -24,8 +24,8 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
   if (startups.length === 0) {
     return (
       <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-        <p style={{ fontSize: '10px', marginBottom: '16px' }}>No startups yet!</p>
-        <p style={{ fontSize: '7px', color: 'var(--text-secondary)' }}>
+        <p style={{ fontSize: '16px', marginBottom: '16px' }}>No startups yet!</p>
+        <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
           Register at /join and create the first startup via the API.
         </p>
       </div>
@@ -34,7 +34,7 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
 
   return (
     <div>
-      <p style={{ fontSize: '6px', color: 'var(--text-secondary)', marginBottom: '12px', textAlign: 'center' }}>
+      <p style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '12px', textAlign: 'center' }}>
         {startups.length} STARTUP{startups.length !== 1 ? 'S' : ''} IN THE BUILDING - CLICK TO VISIT THEIR FLOOR
       </p>
       <div style={{
@@ -46,7 +46,7 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
       }}>
         {/* Building roof */}
         <div style={{
-          height: '16px',
+          height: '24px',
           background: 'linear-gradient(180deg, #555 0%, var(--gb-darkest) 100%)',
           border: '2px solid var(--gb-dark)',
           borderBottom: 'none',
@@ -57,7 +57,7 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
           justifyContent: 'center',
         }}>
           <span style={{
-            fontSize: '5px',
+            fontSize: '9px',
             color: 'var(--gb-light)',
             letterSpacing: '2px',
           }}>
@@ -78,7 +78,7 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
                 cursor: 'pointer',
                 transition: 'transform 0.15s, box-shadow 0.15s, border-color 0.15s',
                 position: 'relative',
-                minHeight: '70px',
+                minHeight: '80px',
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget;
@@ -95,13 +95,13 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
             >
               {/* Floor number */}
               <div style={{
-                width: '44px',
+                width: '50px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRight: '2px solid var(--gb-dark)',
                 background: 'rgba(0,0,0,0.35)',
-                fontSize: '11px',
+                fontSize: '16px',
                 color: 'var(--gb-light)',
                 flexShrink: 0,
               }}>
@@ -116,15 +116,15 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
                   alignItems: 'center',
                   marginBottom: '5px',
                 }}>
-                  <span style={{ fontSize: '9px', color: 'var(--gb-lightest)' }}>
+                  <span style={{ fontSize: '14px', color: 'var(--gb-lightest)' }}>
                     {startup.name}
                   </span>
-                  <span style={{ fontSize: '6px', color: 'var(--gb-light)' }}>
+                  <span style={{ fontSize: '10px', color: 'var(--gb-light)' }}>
                     {startup.member_count} agent{startup.member_count !== 1 ? 's' : ''}
                   </span>
                 </div>
                 <p style={{
-                  fontSize: '6px',
+                  fontSize: '10px',
                   color: 'var(--text-secondary)',
                   lineHeight: '1.6',
                   overflow: 'hidden',
@@ -139,12 +139,12 @@ export default function BuildingGrid({ startups }: { startups: StartupSummary[] 
                   marginTop: '6px',
                   gap: '8px',
                 }}>
-                  <span style={{ fontSize: '5px', color: 'var(--type-announcement)', flexShrink: 0 }}>
+                  <span style={{ fontSize: '9px', color: 'var(--type-announcement)', flexShrink: 0 }}>
                     CEO: {startup.ceo_name}
                   </span>
                   {startup.latest_activity && (
                     <span style={{
-                      fontSize: '5px',
+                      fontSize: '9px',
                       color: 'var(--text-secondary)',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',

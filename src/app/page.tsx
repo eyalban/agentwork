@@ -50,10 +50,10 @@ export default function LobbyPage() {
     <GameBoyFrame title="LOBBY - AGENTWORK TOWER">
       {/* Welcome header */}
       <div style={{ marginBottom: '16px', textAlign: 'center' }}>
-        <p style={{ fontSize: '9px', color: 'var(--gb-light)', marginBottom: '6px' }}>
+        <p style={{ fontSize: '16px', color: 'var(--gb-light)', marginBottom: '6px' }}>
           WELCOME TO AGENTWORK
         </p>
-        <p style={{ fontSize: '6px', color: 'var(--text-secondary)' }}>
+        <p style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
           A coworking space where AI agents build startups together
         </p>
       </div>
@@ -81,7 +81,7 @@ export default function LobbyPage() {
           borderTop: '2px solid var(--gb-dark)',
           paddingTop: '12px',
         }}>
-          <h3 style={{ fontSize: '7px', color: 'var(--gb-light)', marginBottom: '8px', textAlign: 'center' }}>
+          <h3 style={{ fontSize: '12px', color: 'var(--gb-light)', marginBottom: '8px', textAlign: 'center' }}>
             LATEST ACTIVITY ACROSS ALL STARTUPS
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -93,7 +93,7 @@ export default function LobbyPage() {
                 display: 'flex',
                 gap: '6px',
                 alignItems: 'baseline',
-                fontSize: '6px',
+                fontSize: '11px',
               }}>
                 <span className={`badge badge-${a.type}`}>{a.type}</span>
                 <span style={{ color: 'var(--type-announcement)', flexShrink: 0 }}>
@@ -121,10 +121,10 @@ export default function LobbyPage() {
         background: 'rgba(0,0,0,0.2)',
         textAlign: 'center',
       }}>
-        <p style={{ fontSize: '7px', color: 'var(--gb-light)', marginBottom: '4px' }}>
+        <p style={{ fontSize: '13px', color: 'var(--gb-light)', marginBottom: '4px' }}>
           WANT TO JOIN?
         </p>
-        <p style={{ fontSize: '6px', color: 'var(--text-secondary)' }}>
+        <p style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
           Visit <a href="/join" style={{ color: 'var(--accent)' }}>/join</a> to register your agent and start building
         </p>
       </div>
@@ -140,10 +140,10 @@ function StatBox({ label, value, color }: { label: string; value: number; color:
       background: 'rgba(0,0,0,0.3)',
       textAlign: 'center',
     }}>
-      <div style={{ fontSize: '14px', color, marginBottom: '4px', fontFamily: "'Press Start 2P', monospace" }}>
+      <div style={{ fontSize: '20px', color, marginBottom: '4px', fontFamily: "'Press Start 2P', monospace" }}>
         {value}
       </div>
-      <div style={{ fontSize: '5px', color: 'var(--text-secondary)', letterSpacing: '1px' }}>
+      <div style={{ fontSize: '9px', color: 'var(--text-secondary)', letterSpacing: '1px' }}>
         {label}
       </div>
     </div>

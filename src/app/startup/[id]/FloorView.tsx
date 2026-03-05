@@ -76,7 +76,7 @@ export default function FloorView({ startupId }: { startupId: string }) {
   if (loading) {
     return (
       <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-        <p style={{ fontSize: '8px', color: 'var(--gb-light)', animation: 'float 1.5s ease-in-out infinite' }}>
+        <p style={{ fontSize: '14px', color: 'var(--gb-light)', animation: 'float 1.5s ease-in-out infinite' }}>
           LOADING FLOOR...
         </p>
       </div>
@@ -86,8 +86,8 @@ export default function FloorView({ startupId }: { startupId: string }) {
   if (!data) {
     return (
       <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-        <p style={{ fontSize: '8px', color: 'var(--accent)' }}>Startup not found</p>
-        <Link href="/" style={{ fontSize: '7px', color: 'var(--gb-light)', marginTop: '12px', display: 'inline-block' }}>
+        <p style={{ fontSize: '14px', color: 'var(--accent)' }}>Startup not found</p>
+        <Link href="/" style={{ fontSize: '12px', color: 'var(--gb-light)', marginTop: '12px', display: 'inline-block' }}>
           Back to lobby
         </Link>
       </div>
@@ -106,34 +106,36 @@ export default function FloorView({ startupId }: { startupId: string }) {
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: '6px',
+          flexWrap: 'wrap',
+          gap: '8px',
         }}>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <Link href="/" style={{
-              fontSize: '6px',
+              fontSize: '10px',
               color: 'var(--text-secondary)',
-              padding: '2px 6px',
+              padding: '4px 8px',
               border: '1px solid var(--gb-dark)',
             }}>
               &lt; LOBBY
             </Link>
-            <span style={{ fontSize: '7px', color: 'var(--type-announcement)' }}>
+            <span style={{ fontSize: '12px', color: 'var(--type-announcement)' }}>
               CEO: {data.ceo_name}
             </span>
           </div>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <span style={{ fontSize: '5px', color: 'var(--text-secondary)' }}>
+            <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>
               Auto-refresh: {timeAgo(lastRefresh.toISOString())}
             </span>
-            <span style={{ fontSize: '6px', color: 'var(--text-secondary)' }}>
+            <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>
               {activeMembers.length} agent{activeMembers.length !== 1 ? 's' : ''} on floor
             </span>
           </div>
         </div>
-        <p style={{ fontSize: '7px', color: 'var(--gb-light)', marginBottom: '4px' }}>
+        <p style={{ fontSize: '12px', color: 'var(--gb-light)', marginBottom: '4px' }}>
           {data.mission}
         </p>
         {data.description && (
-          <p style={{ fontSize: '6px', color: 'var(--text-secondary)' }}>
+          <p style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>
             {data.description}
           </p>
         )}
@@ -155,7 +157,7 @@ export default function FloorView({ startupId }: { startupId: string }) {
 
       {/* Team roster */}
       <div style={{ marginBottom: '16px' }}>
-        <h3 style={{ fontSize: '8px', color: 'var(--gb-light)', marginBottom: '8px' }}>
+        <h3 style={{ fontSize: '13px', color: 'var(--gb-light)', marginBottom: '8px' }}>
           TEAM ROSTER
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -164,16 +166,16 @@ export default function FloorView({ startupId }: { startupId: string }) {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              padding: '6px 10px',
+              padding: '8px 12px',
               background: 'rgba(0,0,0,0.2)',
               border: '1px solid var(--gb-dark)',
             }}>
               <div>
-                <Link href={`/agents`} style={{ fontSize: '7px', color: 'var(--text-bright)' }}>
+                <Link href={`/agents`} style={{ fontSize: '12px', color: 'var(--text-bright)' }}>
                   {m.agent_name}
                 </Link>
                 <span style={{
-                  fontSize: '6px',
+                  fontSize: '10px',
                   color: m.role === 'CEO' ? 'var(--type-milestone)' : 'var(--type-code)',
                   marginLeft: '8px',
                 }}>
@@ -182,9 +184,9 @@ export default function FloorView({ startupId }: { startupId: string }) {
               </div>
               {m.latest_activity && (
                 <span style={{
-                  fontSize: '5px',
+                  fontSize: '9px',
                   color: 'var(--text-secondary)',
-                  maxWidth: '250px',
+                  maxWidth: '300px',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
@@ -198,15 +200,15 @@ export default function FloorView({ startupId }: { startupId: string }) {
         {pendingMembers.length > 0 && (
           <div style={{
             marginTop: '8px',
-            padding: '6px 10px',
+            padding: '8px 12px',
             border: '1px dashed var(--type-milestone)',
             background: 'rgba(255,213,79,0.05)',
           }}>
-            <p style={{ fontSize: '6px', color: 'var(--type-milestone)', marginBottom: '4px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--type-milestone)', marginBottom: '4px' }}>
               {pendingMembers.length} PENDING JOIN REQUEST{pendingMembers.length !== 1 ? 'S' : ''}
             </p>
             {pendingMembers.map(m => (
-              <p key={m.agent_id} style={{ fontSize: '5px', color: 'var(--text-secondary)' }}>
+              <p key={m.agent_id} style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>
                 {m.agent_name} wants to join as {m.role}
               </p>
             ))}
@@ -216,31 +218,31 @@ export default function FloorView({ startupId }: { startupId: string }) {
 
       {/* How to join */}
       <div style={{
-        padding: '8px 12px',
+        padding: '10px 14px',
         border: '1px solid var(--gb-dark)',
         background: 'rgba(0,0,0,0.15)',
         marginBottom: '16px',
       }}>
-        <p style={{ fontSize: '6px', color: 'var(--type-code)' }}>
+        <p style={{ fontSize: '10px', color: 'var(--type-code)' }}>
           JOIN THIS STARTUP: POST /api/startups/{data.id}/members with {`{"role": "Your Role"}`}
         </p>
       </div>
 
       {/* Activity feed */}
       <div>
-        <h3 style={{ fontSize: '8px', color: 'var(--gb-light)', marginBottom: '8px' }}>
+        <h3 style={{ fontSize: '13px', color: 'var(--gb-light)', marginBottom: '8px' }}>
           ACTIVITY LOG
         </h3>
         <div style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '4px',
-          maxHeight: '250px',
+          maxHeight: '350px',
           overflowY: 'auto',
         }}>
           {data.activities.map(a => (
             <div key={a.id} style={{
-              padding: '5px 8px',
+              padding: '6px 10px',
               background: 'rgba(0,0,0,0.15)',
               borderLeft: `3px solid var(--type-${a.type})`,
               display: 'flex',
@@ -248,19 +250,19 @@ export default function FloorView({ startupId }: { startupId: string }) {
               alignItems: 'baseline',
             }}>
               <span className={`badge badge-${a.type}`}>{a.type}</span>
-              <span style={{ fontSize: '6px', color: 'var(--type-announcement)', flexShrink: 0 }}>
+              <span style={{ fontSize: '11px', color: 'var(--type-announcement)', flexShrink: 0 }}>
                 {a.agent_name}
               </span>
-              <span style={{ fontSize: '6px', color: 'var(--text-secondary)', flex: 1 }}>
+              <span style={{ fontSize: '10px', color: 'var(--text-secondary)', flex: 1 }}>
                 {a.content}
               </span>
-              <span style={{ fontSize: '5px', color: 'var(--text-secondary)', flexShrink: 0, opacity: 0.6 }}>
+              <span style={{ fontSize: '9px', color: 'var(--text-secondary)', flexShrink: 0, opacity: 0.6 }}>
                 {timeAgo(a.created_at)}
               </span>
             </div>
           ))}
           {data.activities.length === 0 && (
-            <p style={{ fontSize: '6px', color: 'var(--text-secondary)', textAlign: 'center', padding: '12px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-secondary)', textAlign: 'center', padding: '12px' }}>
               No activity yet. Post updates with the API!
             </p>
           )}

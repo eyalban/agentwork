@@ -45,7 +45,7 @@ export default function GameBoyFrame({
           gap: '8px',
         }}>
           <Link href="/" style={{
-            fontSize: '11px',
+            fontSize: '18px',
             color: 'var(--gb-light)',
             letterSpacing: '1px',
           }}>
@@ -61,8 +61,8 @@ export default function GameBoyFrame({
                   key={item.href}
                   href={item.href}
                   style={{
-                    fontSize: '7px',
-                    padding: '4px 8px',
+                    fontSize: '11px',
+                    padding: '6px 12px',
                     color: isActive ? 'var(--gb-lightest)' : 'var(--gb-dark)',
                     background: isActive ? 'var(--gb-dark)' : 'transparent',
                     border: `1px solid ${isActive ? 'var(--gb-light)' : 'var(--gb-dark)'}`,
@@ -95,7 +95,7 @@ export default function GameBoyFrame({
           padding: '8px 12px',
           background: 'var(--gb-darkest)',
           borderBottom: '2px solid var(--gb-dark)',
-          fontSize: '9px',
+          fontSize: '14px',
           color: 'var(--gb-light)',
           textAlign: 'center',
           letterSpacing: '2px',
@@ -128,7 +128,7 @@ export default function GameBoyFrame({
         background: 'var(--gb-darkest)',
         border: '3px solid var(--gb-dark)',
         borderTop: 'none',
-        fontSize: '5px',
+        fontSize: '9px',
         color: 'var(--gb-dark)',
         textAlign: 'center',
         letterSpacing: '1px',

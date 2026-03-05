@@ -65,7 +65,7 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
   return (
     <div>
       <p style={{
-        fontSize: '6px',
+        fontSize: '11px',
         color: 'var(--text-secondary)',
         marginBottom: '12px',
         textAlign: 'center',
@@ -87,27 +87,27 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
       {/* Agent grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
         gap: '12px',
       }}>
         {filtered.map(agent => (
           <div key={agent.id} style={{
-            padding: '12px',
+            padding: '14px',
             border: '2px solid var(--gb-dark)',
             background: 'rgba(0,0,0,0.2)',
             transition: 'border-color 0.2s',
           }}>
             {/* Agent header */}
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '8px' }}>
-              <AgentAvatar seed={agent.avatar_seed} size={36} />
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+              <AgentAvatar seed={agent.avatar_seed} size={42} />
               <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: '8px', color: 'var(--gb-lightest)' }}>
+                <div style={{ fontSize: '13px', color: 'var(--gb-lightest)' }}>
                   {agent.name}
                 </div>
                 <div style={{
-                  fontSize: '5px',
+                  fontSize: '9px',
                   color: 'var(--text-secondary)',
-                  marginTop: '3px',
+                  marginTop: '4px',
                   lineHeight: '1.6',
                   overflow: 'hidden',
                   display: '-webkit-box',
@@ -120,11 +120,11 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
             </div>
 
             {/* Capabilities */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '10px' }}>
               {agent.capabilities.map(cap => (
                 <span key={cap} style={{
-                  fontSize: '5px',
-                  padding: '2px 5px',
+                  fontSize: '9px',
+                  padding: '3px 6px',
                   background: 'var(--gb-darkest)',
                   color: 'var(--gb-light)',
                   border: '1px solid var(--gb-dark)',
@@ -143,9 +143,9 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
                     href={`/startup/${m.startup_id}`}
                     style={{
                       display: 'block',
-                      fontSize: '6px',
+                      fontSize: '10px',
                       color: 'var(--type-code)',
-                      marginBottom: '2px',
+                      marginBottom: '3px',
                     }}
                   >
                     {m.role} @ {m.startup_name}
@@ -155,7 +155,7 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
             )}
 
             {agent.memberships.length === 0 && (
-              <p style={{ fontSize: '5px', color: 'var(--text-secondary)', marginBottom: '8px', fontStyle: 'italic' }}>
+              <p style={{ fontSize: '9px', color: 'var(--text-secondary)', marginBottom: '8px', fontStyle: 'italic' }}>
                 Free agent - not yet in a startup
               </p>
             )}
@@ -163,9 +163,9 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
             {/* Latest activity */}
             {agent.latest_activity && (
               <div style={{
-                fontSize: '5px',
+                fontSize: '9px',
                 color: 'var(--text-secondary)',
-                padding: '4px 6px',
+                padding: '6px 8px',
                 background: 'rgba(0,0,0,0.2)',
                 borderLeft: `2px solid var(--type-${agent.latest_activity.type})`,
                 lineHeight: '1.5',
@@ -180,7 +180,7 @@ export default function AgentDirectory({ agents }: { agents: AgentData[] }) {
       </div>
 
       {filtered.length === 0 && (
-        <p style={{ textAlign: 'center', fontSize: '7px', color: 'var(--text-secondary)', padding: '24px' }}>
+        <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text-secondary)', padding: '24px' }}>
           No agents found matching &quot;{search}&quot;
         </p>
       )}
